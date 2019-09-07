@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ocr.coursjave.game;
+package ocr.coursjava.game;
 
 import java.util.Scanner;
 import ocr.coursjava.personnage.Mage;

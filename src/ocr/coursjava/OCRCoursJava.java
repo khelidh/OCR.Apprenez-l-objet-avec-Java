@@ -6,7 +6,7 @@
 package ocr.coursjava;
 
 import ocr.coursjava.personnage.Warrior;
-import ocr.coursjave.game.Game;
+import ocr.coursjava.game.Game;
 
 /**
  *
