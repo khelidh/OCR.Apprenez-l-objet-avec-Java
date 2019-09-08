@@ -15,7 +15,7 @@ import ocr.coursjava.personnage.Guerrier;
  *
  * @author MAMA
  */
-public class Game {
+public class Partie {
 
     private final String nomJoueur1 = "Joueur 1";
     private final String nomJoueur2 = "Joueur 2";
@@ -26,13 +26,13 @@ public class Game {
 
     private boolean tour;
 
-    public Game() {
+    public Partie() {
         this.personnageJoueur1 = null;
         this.personnageJoueur2 = null;
         this.tour = true;
     }
 
-    public void commencerPartie() throws NumberFormatException {
+    public void demarrerPartie(){
         Scanner scanner = new Scanner(System.in);
 
         personnageJoueur1 = this.personnageCreator.creationPersonnage(scanner, nomJoueur1);
@@ -46,6 +46,7 @@ public class Game {
             }
 
             if (verificationFinDePartie()) {
+                scanner.close();
                 break;
             } else {
                 tour = !tour;
@@ -105,7 +106,7 @@ public class Game {
     }
 
     public void basiqueAttaque(Personnage personnageJoueur, Personnage personnageAdverse) {
-        int dommage = personnageJoueur.basisqueAttaque(personnageAdverse);
+        int dommage = personnageJoueur.basiqueAttaque(personnageAdverse);
         String output = String.format("%s utilise %s et inflige %d dommages\n%s perd %d points de vie",
                 personnageJoueur.getNomJoueur(), personnageJoueur.getBasiqueAttaqueNom(), dommage, personnageAdverse.getNomJoueur(), dommage);
         System.out.println(output);
@@ -118,6 +119,10 @@ public class Game {
             personnageJoueur.specialeAttaque();
         }
     }
+    
+    
+    
+    
     
     /*
     Get & Set ers

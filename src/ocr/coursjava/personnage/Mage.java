@@ -18,14 +18,23 @@ public class Mage extends Personnage {
     public Mage(int level, int force, int agility, int intelligence, String nomJoueur, String nomClasse, String basicAttackName, String specialAttackName) {
         super(level, force, agility, intelligence, nomJoueur, nomClasse, basicAttackName, specialAttackName);
     }
-
+    
+    /**
+     * Attaque de base du Mage : les dommages infligés sont égaux à son intelligence
+     * @param personnageAdverse
+     * @return 
+     */
     @Override
-    public int basisqueAttaque(Personnage enemy) {
+    public int basiqueAttaque(Personnage personnageAdverse) {
         int dommage = this.getIntelligence();
-        enemy.setVie(enemy.getVie() - dommage);
+        personnageAdverse.setVie(personnageAdverse.getVie() - dommage);
         return dommage;
     }
 
+     /**
+     * Attaque spéciale du Mage : ajoute 2 son intelligence à sa vitalité mais ne peut pas dépasser
+     * sa vitalité maximum ( qui vaut Niveau fois 5)
+     */
     @Override
     public void specialeAttaque() {
         int newVie = this.getVie() + this.getIntelligence() * 2;
@@ -39,6 +48,5 @@ public class Mage extends Personnage {
 
         System.out.println(String.format("%s utilise %s et se soigne jusqu'à %d de vitalité",
                 this.getNomJoueur(), this.getSpecialeAttaqueNom(), this.getVie()));
-
     }
 }

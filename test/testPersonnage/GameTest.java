@@ -5,14 +5,10 @@
  */
 package testPersonnage;
 
-import ocr.coursjava.game.Game;
+import ocr.coursjava.game.Partie;
 import ocr.coursjava.personnage.Guerrier;
 import ocr.coursjava.personnage.Mage;
 import ocr.coursjava.personnage.Rodeur;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -24,7 +20,7 @@ public class GameTest {
     
     @Test
     public void testActionJoueur(){
-        Game partie = new Game();
+        Partie partie = new Partie();
         Guerrier guerrier = new Guerrier(50, 35, 10, 5, "guerrier", "Guerrier", "basiqueAttaqueGuerrier", "specialeAttaqueGuerrier");
         Rodeur rodeur = new Rodeur(50, 10, 30, 10, "rodeur", "Rodeur", "basiqueAttaqueRodeur", "specialeAttaqueRodeur");
         
@@ -37,9 +33,9 @@ public class GameTest {
     }
     
     @Test
-    public void testAttaques(){
+    public void testAttaquesBasiquesEtSpeciales(){
     
-        Game partie = new Game();
+        Partie partie = new Partie();
         Guerrier guerrier = new Guerrier(50, 35, 10, 5, "guerrier", "Guerrier", "basiqueAttaqueGuerrier", "specialeAttaqueGuerrier");
         Mage mage = new Mage(10, 0, 0, 10, "mage", "Mage", "basiqueAttaqueMage", "specialeAttaqueMage");
         Rodeur rodeur = new Rodeur(50, 10, 30, 10, "rodeur", "Rodeur", "basiqueAttaqueRodeur", "specialeAttaqueRodeur");
@@ -66,7 +62,7 @@ public class GameTest {
     
     @Test
     public void testVerificationFinDePartie(){
-        Game partie = new Game();
+        Partie partie = new Partie();
         Mage mage = new Mage(50, 0, 15, 35, "mage", "Mage", "basiqueAttaqueMage", "specialeAttaqueMage");
         Rodeur rodeur = new Rodeur(50, 10, 30, 10, "rodeur", "Rodeur", "basiqueAttaqueRodeur", "specialeAttaqueRodeur");
         
@@ -77,6 +73,8 @@ public class GameTest {
         assertTrue("fin de partie mageVie == 0", partie.verificationFinDePartie() == true);
         mage.setVie(10);
         rodeur.setVie(0);
+        assertTrue("fin de partie mageVie == 0", partie.verificationFinDePartie() == true);
+        mage.setVie(0);
         assertTrue("fin de partie mageVie == 0", partie.verificationFinDePartie() == true);
         
     }

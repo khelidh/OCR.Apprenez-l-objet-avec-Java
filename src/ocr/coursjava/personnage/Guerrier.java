@@ -17,14 +17,24 @@ public class Guerrier extends Personnage {
     public Guerrier(int level, int force, int agility, int intelligence, String nomJoueur, String nomClasse, String basicAttackName, String specialAttackName) {
         super(level, force, agility, intelligence, nomJoueur, nomClasse, basicAttackName, specialAttackName);
     }
-    
+    /**
+     * Attaque de base du Guerrier : les dommages infligés sont égaux à sa force
+     * @param personnageAdverse
+     * @return 
+     */
     @Override
-    public int basisqueAttaque(Personnage enemy){
+    public int basiqueAttaque(Personnage personnageAdverse){
         int dommage = this.getForce();
-        enemy.setVie(enemy.getVie() - dommage);   
+        personnageAdverse.setVie(personnageAdverse.getVie() - dommage);   
         return dommage;
     }
     
+    /**
+     * Attaque spéciale du Guerrier : 
+     *      - Inflige des dommages à l'adversaire équivalants à 2 fois sa force
+     *      - S'inflige des dommages équivalants à sa force divisée par 2
+     * @param personnageAdverse
+     */
     @Override
     public void specialeAttaque(Personnage personnageAdverse){
         int force = this.getForce();

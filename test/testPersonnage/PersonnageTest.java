@@ -5,17 +5,11 @@ package testPersonnage;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.Scanner;
-import ocr.coursjava.game.Game;
 import ocr.coursjava.game.PersonnageCreator;
 import ocr.coursjava.personnage.Personnage;
 import ocr.coursjava.personnage.Guerrier;
 import ocr.coursjava.personnage.Mage;
-import ocr.coursjava.personnage.Rodeur;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -38,7 +32,7 @@ public class PersonnageTest {
     }
 
     @Test
-    public void testPersonnageCree() {
+    public void testCreationPersonnages() {
         Personnage mage = new Mage("MageTEST");
         
         personnageCreator.setNiveauPersonnage(mage, 300);

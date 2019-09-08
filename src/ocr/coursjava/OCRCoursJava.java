@@ -6,7 +6,7 @@
 package ocr.coursjava;
 
 import ocr.coursjava.personnage.Guerrier;
-import ocr.coursjava.game.Game;
+import ocr.coursjava.game.Partie;
 
 /**
  *
@@ -19,8 +19,8 @@ public class OCRCoursJava {
      */
     public static void main(String[] args) {
 
-        Game game = new Game();
-        game.commencerPartie();
+        Partie game = new Partie();
+        game.demarrerPartie();
         
     }
     

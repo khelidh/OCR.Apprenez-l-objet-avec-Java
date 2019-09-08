@@ -6,25 +6,32 @@
 package ocr.coursjava.personnage;
 
 /**
- *
+ * Super classe des différents personnages accessibles dans le jeu (Guerrier, Rodeur & Mage)
  * @author MAMA
  */
 public class Personnage {
     
-    /*
-    
-    Level = Force + Agility + Intelligence
-    Health = Level * 5
-    
-    */
+   
     protected String nomJoueur;
     protected String nomClasse;
+     /**
+        Niveau = Force + Agilité + Intelligence
+    **/
     protected int niveau; 
-    protected int vie; 
+    /**
+     * vie = niveau multiplié par 5
+     */
+    protected int vie; // 
     protected int force; 
     protected int agilite; 
     protected int intelligence; 
+    /**
+     * nom de l'attaque de base différent selon les classes filles de Personnage
+     */
     protected String basiqueAttaqueNom;
+    /**
+     * nom de l'attaque spécial différent selon les classes filles de Personnage
+     */
     protected String specialeAttaqueNom;
 
     
@@ -42,12 +49,19 @@ public class Personnage {
     
     
     
+    /*
     
-    public int basisqueAttaque(Personnage p){return 0;};
+    Méthodes d'attaque à surcharger dans les classes filles
+    
+    */
+    public int basiqueAttaque(Personnage p){return 0;};
     public void specialeAttaque(){};
     public void specialeAttaque(Personnage p){};
 
-    
+    /**
+     * Override de la méthode toString qui permet de donner une description détaillé des attributs du personnage
+     * @return String
+     */
     @Override
     public String toString(){
         String introductionPhrase = "";

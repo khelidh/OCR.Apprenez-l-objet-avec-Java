@@ -18,14 +18,21 @@ public class Rodeur extends Personnage{
     public Rodeur(int level, int force, int agility, int intelligence, String nomJoueur, String nomClasse, String basicAttackName, String specialAttackName) {
         super(level, force, agility, intelligence, nomJoueur, nomClasse, basicAttackName, specialAttackName);
     }
-    
+    /**
+     * Attaque de base du Rodeur : les dommages infligés sont égaux à son agilité
+     * @param personnageAdverse
+     * @return 
+     */
     @Override
-     public int basisqueAttaque(Personnage enemy){
+     public int basiqueAttaque(Personnage personnageAdverse){
         int dommage = this.getAgilite();
-        enemy.setVie(enemy.getVie() - dommage);   
+        personnageAdverse.setVie(personnageAdverse.getVie() - dommage);   
         return dommage;
     }
-    
+     /**
+     * Attaque spéciale du Rodeur : augmentation de l'agilité correspondant à la moitié de son niveau
+     * Exemple : Niveau = 10 & Agilité = 5 ---devient---> Niveau = 10 & Agilité = 5 + 10/2 = 10
+     */
     @Override
     public void specialeAttaque(){       
         this.setAgilite(this.getAgilite() + (this.getNiveau()/2));

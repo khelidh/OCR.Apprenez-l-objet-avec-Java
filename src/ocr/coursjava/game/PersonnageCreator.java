@@ -12,11 +12,21 @@ import ocr.coursjava.personnage.Rodeur;
 import ocr.coursjava.personnage.Guerrier;
 
 /**
- *
- * @author MAMA
+ * Gère la création des personnages lors de la première phase du programme
+ * Les méthodes choix* utilise le scanner permettant les entrées clavier et appelle leur méthode set*
+ * Choix* : Classe et les différentes valeurs des attributs (niveau, force, agilité et intelligence) par l'utilisateur
+ * Les méthodes set* sont indépendantes et pourraient être utilisées avec entrées via IHM
+ * Set* : lie la valeur aux différents attributs ( niveau, force, agilité et intelligence) de l'objet Personnage spécifié
+ * La méthode choixClassePersonnage est différente et n'appelle pas de fonction set* : elle crée et renvoie l'objet Personnage choisi par l'utilisateur
  */
 public class PersonnageCreator {
-    
+    /**
+     * Renvoie un Personnage avec les attributs choisis par l'utilisateur grâce à l'entrée clavier
+     * A la fin de toutes les actions de création du personnage, la méthode toString est appelée pour donner la description globale du perso
+     * @param scanner
+     * @param nomJoueur
+     * @return 
+     */
     public Personnage creationPersonnage(Scanner scanner, String nomJoueur) {
 
         Personnage personnageJoueur = choixClassePersonnage(scanner, nomJoueur);
@@ -148,6 +158,12 @@ public class PersonnageCreator {
         return false;
     }
 
+    /**
+     * Gère l'exception NumberFormatException lors de l'entrée clavier des actions Joueur
+     * Si l'exception est attrapée, on donne -1 à l'input
+     * @param input
+     * @return 
+     */
     public int inputToInteger(String input) {
         try {
             return Integer.parseInt(input);
