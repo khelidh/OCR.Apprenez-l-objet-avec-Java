@@ -5,7 +5,6 @@
  */
 package ocr.coursjava;
 
-import ocr.coursjava.personnage.Guerrier;
 import ocr.coursjava.game.Partie;
 
 /**
@@ -15,12 +14,13 @@ import ocr.coursjava.game.Partie;
 public class OCRCoursJava {
 
     /**
+     * Point d'entrée : On initialise la partie puis on appelle demarrerPartie() pour lancer
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-        Partie game = new Partie();
-        game.demarrerPartie();
+        Partie partie = new Partie();
+        partie.demarrerPartie();
         
     }
     
