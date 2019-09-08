@@ -17,69 +17,87 @@ public class Personnage {
     Health = Level * 5
     
     */
+    protected String nomJoueur;
     protected String nomClasse;
-    protected int level; 
-    protected int health; 
+    protected int niveau; 
+    protected int vie; 
     protected int force; 
-    protected int agility; 
+    protected int agilite; 
     protected int intelligence; 
-    protected String basicAttackName;
-    protected String specialAttackName;
+    protected String basiqueAttaqueNom;
+    protected String specialeAttaqueNom;
 
-    public Personnage() {
-    }
-    public Personnage(int level, int force, int agility, int intelligence, String nomClasse, String basicAttackName, String specialAttackName ) {
-        this.level = level;
+    
+    public Personnage(int level, int force, int agility, int intelligence, String nomJoueur, String nomClasse, String basicAttackName, String specialAttackName ) {
+        this.niveau = level;
         this.force = force;
-        this.agility = agility;
+        this.agilite = agility;
         this.intelligence = intelligence;
-        this.health = 5 * level;
-        this.basicAttackName = basicAttackName;
-        this.specialAttackName = specialAttackName;
+        this.vie = 5 * level;
+        this.basiqueAttaqueNom = basicAttackName;
+        this.specialeAttaqueNom = specialAttackName;
         this.nomClasse = nomClasse;
+        this.nomJoueur = nomJoueur;
     }
     
     
     
     
-    protected void basicAttack(Personnage p){};
-    protected void specialAttack(){};
-    protected void specialAttack(Personnage p){};
+    public int basisqueAttaque(Personnage p){return 0;};
+    public void specialeAttaque(){};
+    public void specialeAttaque(Personnage p){};
 
-    public void toString(String nomJoueur){
+    
+    @Override
+    public String toString(){
         String introductionPhrase = "";
         
-        if (this instanceof Warrior)
+        if (this instanceof Guerrier)
             introductionPhrase = "Woarg";
         else if (this instanceof Mage)
             introductionPhrase = "Abracadabra";
-        else if (this instanceof Rogue)
+        else if (this instanceof Rodeur)
             introductionPhrase = "Halte";
         
         String resumePersonnage = String.format("%s ! Je suis le %s %s de niveau %d je possède %d de vitalité, %d de force, %d d'agilité, %d d'intelligence !",
-                introductionPhrase, this.getNomClasse(), nomJoueur, this.getLevel(), this.getHealth(), this.getForce(), this.getAgility(), this.getIntelligence());   
+                introductionPhrase, this.getNomClasse(), this.getNomJoueur(), this.getNiveau(), this.getVie(), this.getForce(), this.getAgilite(), this.getIntelligence());   
     
-        System.out.println(resumePersonnage);
+        return resumePersonnage;
     }
     
     
     //// {Get & Set}ers
-    
-    
-    public int getLevel() {
-        return level;
+
+    public String getNomJoueur() {
+        return nomJoueur;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setNomJoueur(String nomJoueur) {
+        this.nomJoueur = nomJoueur;
     }
 
-    public int getHealth() {
-        return health;
+    public String getNomClasse() {
+        return nomClasse;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setNomClasse(String nomClasse) {
+        this.nomClasse = nomClasse;
+    }
+
+    public int getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(int niveau) {
+        this.niveau = niveau;
+    }
+
+    public int getVie() {
+        return vie;
+    }
+
+    public void setVie(int vie) {
+        this.vie = vie;
     }
 
     public int getForce() {
@@ -90,12 +108,12 @@ public class Personnage {
         this.force = force;
     }
 
-    public int getAgility() {
-        return agility;
+    public int getAgilite() {
+        return agilite;
     }
 
-    public void setAgility(int agility) {
-        this.agility = agility;
+    public void setAgilite(int agilite) {
+        this.agilite = agilite;
     }
 
     public int getIntelligence() {
@@ -106,29 +124,24 @@ public class Personnage {
         this.intelligence = intelligence;
     }
 
-    public String getBasicAttackName() {
-        return basicAttackName;
+    public String getBasiqueAttaqueNom() {
+        return basiqueAttaqueNom;
     }
 
-    public void setBasicAttackName(String basicAttackName) {
-        this.basicAttackName = basicAttackName;
+    public void setBasiqueAttaqueNom(String basiqueAttaqueNom) {
+        this.basiqueAttaqueNom = basiqueAttaqueNom;
     }
 
-    public String getSpecialAttackName() {
-        return specialAttackName;
+    public String getSpecialeAttaqueNom() {
+        return specialeAttaqueNom;
     }
 
-    public void setSpecialAttackName(String specialAttackName) {
-        this.specialAttackName = specialAttackName;
+    public void setSpecialeAttaqueNom(String specialeAttaqueNom) {
+        this.specialeAttaqueNom = specialeAttaqueNom;
     }
-
-    public String getNomClasse() {
-        return nomClasse;
-    }
-
-    public void setNomClasse(String nomClasse) {
-        this.nomClasse = nomClasse;
-    }
+    
+    
+    
     
     
     

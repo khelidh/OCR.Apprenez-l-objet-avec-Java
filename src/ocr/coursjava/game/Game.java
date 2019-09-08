@@ -8,8 +8,8 @@ package ocr.coursjava.game;
 import java.util.Scanner;
 import ocr.coursjava.personnage.Mage;
 import ocr.coursjava.personnage.Personnage;
-import ocr.coursjava.personnage.Rogue;
-import ocr.coursjava.personnage.Warrior;
+import ocr.coursjava.personnage.Rodeur;
+import ocr.coursjava.personnage.Guerrier;
 
 /**
  *
@@ -17,116 +17,135 @@ import ocr.coursjava.personnage.Warrior;
  */
 public class Game {
 
-    String nomJoueur1 = "Joueur 1";
-    String nomJoueur2 = "Joueur 2";
+    private final String nomJoueur1 = "Joueur 1";
+    private final String nomJoueur2 = "Joueur 2";
+    private final PersonnageCreator personnageCreator = new PersonnageCreator();
 
-    Personnage personnageJoueur1 = null;
-    Personnage personnageJoueur2 = null;
-    
-    public void commencerPartie(){
-        creationPersonnage(personnageJoueur1, nomJoueur1);
-        creationPersonnage(personnageJoueur2, nomJoueur2);
+    private Personnage personnageJoueur1;
+    private Personnage personnageJoueur2;
+
+    private boolean tour;
+
+    public Game() {
+        this.personnageJoueur1 = null;
+        this.personnageJoueur2 = null;
+        this.tour = true;
     }
 
-    public void creationPersonnage(Personnage personnageJoueur, String nomJoueur) {
-
+    public void commencerPartie() throws NumberFormatException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Création du personnage de " + nomJoueur);
 
-        personnageJoueur = choixClassePersonnage(scanner);
+        personnageJoueur1 = this.personnageCreator.creationPersonnage(scanner, nomJoueur1);
+        personnageJoueur2 = this.personnageCreator.creationPersonnage(scanner, nomJoueur2);
 
-        choixNiveauPersonnage(scanner, personnageJoueur);
-        choixForcePersonnage(scanner, personnageJoueur);
-        choixAgilitePersonnage(scanner, personnageJoueur);
-        choixIntelligencePersonnage(scanner, personnageJoueur);
+        while (true) {
+            if (tour) {
+                this.choixActionJoueur(scanner, personnageJoueur1, personnageJoueur2);
+            } else {
+                this.choixActionJoueur(scanner, personnageJoueur2, personnageJoueur1);
+            }
 
-        personnageJoueur.toString(nomJoueur);
-    }
-
-    public Personnage choixClassePersonnage(Scanner scanner) {
-        
-        System.out.println("Veuillez choisir la classe de votre personnage : 1 pour Guerrier ; 2 pour Rôdeur ; 3 pour Mage");
-        String input = scanner.nextLine();
-        int choixClasse = Integer.parseInt(input);
-        
-        Personnage perso;
-        switch (choixClasse) {
-            case (1):
-                perso = new Warrior();
+            if (verificationFinDePartie()) {
                 break;
-            case (2):
-                perso = new Rogue();
-                break;
-            default:
-                perso = new Mage();
-        }
-        return perso;
-    }
-
-    public void choixIntelligencePersonnage(Scanner scanner, Personnage personnageJoueur) {
-
-        while (true) {
-            System.out.println("Intelligence du personnage ? Doit être inférieur ou égale au niveau de votre personnage, et compris entre 0 et 100");
-            String input = scanner.nextLine();
-            int intelligencePersonnage = Integer.parseInt(input);
-            if (intelligencePersonnage >= 0 && (intelligencePersonnage + personnageJoueur.getForce() + personnageJoueur.getAgility()) == personnageJoueur.getLevel()) {
-                personnageJoueur.setIntelligence(intelligencePersonnage);
-                return;
             } else {
-                System.out.println("Vous n'avez pas saisi une intelligence inférieure ou égale au niveau du personnage moins la force et l'agilité ou compris dans l'intervalle [0,100] ! "
-                        + "Il faut respecter : Force + Agilité + Intelligence = Niveau de votre personnage (" + personnageJoueur.getLevel() + ")");
+                tour = !tour;
             }
         }
     }
 
-    public void choixAgilitePersonnage(Scanner scanner, Personnage personnageJoueur) {
+    public void choixActionJoueur(Scanner scanner, Personnage personnageJoueur, Personnage personnageAdverse) {
 
         while (true) {
-            System.out.println("Agilité du personnage ? Doit être inférieur ou égale au niveau de votre personnage, et compris entre 0 et 100");
-            String input = scanner.nextLine();
-            int agilitePersonnage = Integer.parseInt(input);
 
-            if (agilitePersonnage >= 0 && (agilitePersonnage + personnageJoueur.getForce()) <= personnageJoueur.getLevel()) {
-                personnageJoueur.setAgility(agilitePersonnage);
-                return;
-            } else {
-                System.out.println("Vous n'avez pas saisi une agilité inférieure ou égale au niveau du personnage moins la force ou compris dans l'intervalle [0,100] !"
-                        + "Il faut respecter : Force + Agilité + Intelligence = Niveau de votre personnage (" + personnageJoueur.getLevel() + ")");
+            String chaine = String.format("%s %s (%d vitalité) veuillez choisir votre action :\n    1. Attaque Basique : %s \n    2. Attaque Spéciale : %s",
+                    personnageJoueur.getNomClasse(), personnageJoueur.getNomJoueur(), personnageJoueur.getVie(), personnageJoueur.getBasiqueAttaqueNom(), personnageJoueur.getSpecialeAttaqueNom());
+            System.out.println(chaine);
+
+            String input = scanner.nextLine();
+            
+            try {
+                int action = Integer.parseInt(input);
+                if (actionJoueur(personnageJoueur, personnageAdverse, action))
+                    return;
+            } catch (NumberFormatException e) {
+                System.out.println("Vous n'avez pas saisi un indice correspondant à une action");
             }
         }
     }
 
-    public void choixForcePersonnage(Scanner scanner, Personnage personnageJoueur) {
-
-        while (true) {
-            System.out.println("Force du personnage ? Doit être inférieur ou égale au niveau de votre personnage, et compris entre 0 et 100");
-            String input = scanner.nextLine();
-            int forcePersonnage = Integer.parseInt(input);
-
-            if (forcePersonnage >= 0 && forcePersonnage <= personnageJoueur.getLevel()) {
-                personnageJoueur.setForce(forcePersonnage);
-                return;
+    public boolean actionJoueur(Personnage personnageJoueur, Personnage personnageAdverse, int action) {
+        if (action == 1 || action == 2) {
+            if (action == 1) {
+                this.basiqueAttaque(personnageJoueur, personnageAdverse);
             } else {
-                System.out.println("Vous n'avez pas saisi une force inférieure ou égale au niveau du personnage ou compris dans l'intervalle [0,100] !");
+                this.specialeAttaque(personnageJoueur, personnageAdverse);
             }
+
+            return true;
         }
+        return false;
     }
 
-    public void choixNiveauPersonnage(Scanner scanner, Personnage personnageJoueur) {
+    public boolean verificationFinDePartie() {
 
-        while (true) {
-            System.out.println("Niveau du personnage ? Compris entre 1 et 100");
-            String input = scanner.nextLine();
-            int niveauPersonnage = Integer.parseInt(input);
+        int vieJoueur1 = personnageJoueur1.getVie();
+        int vieJoueur2 = personnageJoueur2.getVie();
 
-            if (niveauPersonnage >= 1 && niveauPersonnage <= 100) {
-                personnageJoueur.setLevel(niveauPersonnage);
-                personnageJoueur.setHealth(niveauPersonnage * 5);
-                return;
-            } else {
-                System.out.println("Vous n'avez pas saisi un niveau entre 1 et 100!");
-            }
+        if (vieJoueur1 <= 0 && vieJoueur2 > 0) {
+            System.out.println(String.format("%s est mort ! %s gagne la partie !", personnageJoueur1.getNomJoueur(), personnageJoueur2.getNomJoueur()));
+            return true;
+        } else if (vieJoueur1 > 0 && vieJoueur2 <= 0) {
+            System.out.println(String.format("%s est mort ! %s gagne la partie !", personnageJoueur2.getNomJoueur(), personnageJoueur1.getNomJoueur()));
+            return true;
+        } else if (vieJoueur1 <= 0 && vieJoueur2 <= 0) {
+            System.out.println(String.format("Les joueurs se sont entretués ! Match nul !", personnageJoueur2.getNomJoueur()));
+            return true;
         }
+        return false;
     }
 
+    public void basiqueAttaque(Personnage personnageJoueur, Personnage personnageAdverse) {
+        int dommage = personnageJoueur.basisqueAttaque(personnageAdverse);
+        String output = String.format("%s utilise %s et inflige %d dommages\n%s perd %d points de vie",
+                personnageJoueur.getNomJoueur(), personnageJoueur.getBasiqueAttaqueNom(), dommage, personnageAdverse.getNomJoueur(), dommage);
+        System.out.println(output);
+    }
+
+    public void specialeAttaque(Personnage personnageJoueur, Personnage personnageAdverse) {
+        if (personnageJoueur instanceof Guerrier) {
+            personnageJoueur.specialeAttaque(personnageAdverse);
+        } else {
+            personnageJoueur.specialeAttaque();
+        }
+    }
+    
+    /*
+    Get & Set ers
+    */
+
+    public Personnage getPersonnageJoueur1() {
+        return personnageJoueur1;
+    }
+
+    public void setPersonnageJoueur1(Personnage personnageJoueur1) {
+        this.personnageJoueur1 = personnageJoueur1;
+    }
+
+    public Personnage getPersonnageJoueur2() {
+        return personnageJoueur2;
+    }
+
+    public void setPersonnageJoueur2(Personnage personnageJoueur2) {
+        this.personnageJoueur2 = personnageJoueur2;
+    }
+
+    public boolean isTour() {
+        return tour;
+    }
+
+    public void setTour(boolean tour) {
+        this.tour = tour;
+    }
+    
+    
 }
