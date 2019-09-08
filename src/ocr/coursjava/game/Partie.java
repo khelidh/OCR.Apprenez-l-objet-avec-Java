@@ -26,12 +26,18 @@ public class Partie {
 
     private boolean tour;
 
+    /**
+     * tour = true : tour du joueur 1
+     */
     public Partie() {
         this.personnageJoueur1 = null;
         this.personnageJoueur2 = null;
         this.tour = true;
     }
 
+    /**
+     * Lance une partie : creation des 2 personnages avec PersonnageCreator & combat tour par tour avec choixActionJoueur
+     */
     public void demarrerPartie(){
         Scanner scanner = new Scanner(System.in);
 
@@ -54,6 +60,13 @@ public class Partie {
         }
     }
 
+    /**
+     * Demande l'entrée clavier de l'indice de l'action à l'utilisateur et appelle la méthode actionJoueur() pour l'exécuter
+     * Traitement de l'exception NumberFormatException. Si elle est levée ou que l'indice n'est pas dans l'intervalle autorisée, on ne sort pas de la boucle.
+     * @param scanner
+     * @param personnageJoueur
+     * @param personnageAdverse 
+     */
     public void choixActionJoueur(Scanner scanner, Personnage personnageJoueur, Personnage personnageAdverse) {
 
         while (true) {
@@ -74,6 +87,14 @@ public class Partie {
         }
     }
 
+    /**
+     * Suivant l'action du joueur (1 pour attaque basique et 2 pour attaque spéciale), on excute la fonction surchargée des sous-classes
+     * Retourne true si l'action est exécutée
+     * @param personnageJoueur
+     * @param personnageAdverse
+     * @param action
+     * @return 
+     */
     public boolean actionJoueur(Personnage personnageJoueur, Personnage personnageAdverse, int action) {
         if (action == 1 || action == 2) {
             if (action == 1) {
@@ -87,6 +108,10 @@ public class Partie {
         return false;
     }
 
+    /**
+     * Retourne vrai si la partie est terminée (vitalité d'un des deux ou des deux personnages inférieure à 0
+     * @return 
+     */
     public boolean verificationFinDePartie() {
 
         int vieJoueur1 = personnageJoueur1.getVie();
@@ -105,6 +130,11 @@ public class Partie {
         return false;
     }
 
+    /**
+     * Exécute l'attaque de base des différentes classes sur le personnage adverse
+     * @param personnageJoueur
+     * @param personnageAdverse 
+     */
     public void basiqueAttaque(Personnage personnageJoueur, Personnage personnageAdverse) {
         int dommage = personnageJoueur.basiqueAttaque(personnageAdverse);
         String output = String.format("%s utilise %s et inflige %d dommages\n%s perd %d points de vie",
@@ -112,6 +142,12 @@ public class Partie {
         System.out.println(output);
     }
 
+    /**
+     * Si le Personnage est un Guerrier, la fonction specialeAttaque() prend comme paramètre le personnage adverse
+     * Sinon sans paramètre
+     * @param personnageJoueur
+     * @param personnageAdverse 
+     */
     public void specialeAttaque(Personnage personnageJoueur, Personnage personnageAdverse) {
         if (personnageJoueur instanceof Guerrier) {
             personnageJoueur.specialeAttaque(personnageAdverse);
