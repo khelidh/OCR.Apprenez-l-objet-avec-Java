@@ -8,7 +8,8 @@ package ocr.coursjava;
 import ocr.coursjava.game.Partie;
 
 /**
- *
+ * Activité OpenClassRooms : Apprenez l’objet avec Java
+ * https://openclassrooms.com/fr/courses/4989236-apprenez-l-objet-avec-java
  * @author MAMA
  */
 public class OCRCoursJava {
